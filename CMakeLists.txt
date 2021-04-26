@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.15)
 
 project(CarOperation LANGUAGES CXX)
 
-add_compile_options(-Wall -Werror -Wextra -Wpedantic)
-
+if (WIN32)
+  set(EXEC_FLAG WIN32)
+endif()
 
 set(BIN_NAME carop)
-
-add_executable(${BIN_NAME})
+add_executable(${BIN_NAME} ${EXEC_FLAG})
 
 
 set_target_properties(${BIN_NAME} PROPERTIES
@@ -22,13 +22,18 @@ set_target_properties(${BIN_NAME} PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/release
 )
 
+add_compile_options(-Wall -Werror -Wextra -Wpedantic)
 
-set(SRC main.cpp)
+
+set(SRC main.cpp
+  include/dialog/connectiondialog.hpp src/connectiondialog.cpp
+  src/database.cpp
+)
 
 
 find_package(Qt5 COMPONENTS Widgets Sql REQUIRED)
 
-target_include_directories(${BIN_NAME} INTERFACE include)
+include_directories(include)
 
 target_sources(${BIN_NAME} PRIVATE ${SRC})
 
