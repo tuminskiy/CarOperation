@@ -1,4 +1,4 @@
-#include "dialog/connectiondialog.hpp"
+#include "window/connectiondialog.hpp"
 
 #include <QMessageBox>
 #include <QSqlError>
