@@ -26,9 +26,12 @@ add_compile_options(-Wall -Werror -Wextra -Wpedantic)
 
 
 set(SRC main.cpp
-  include/window/connectiondialog.hpp src/connectiondialog.cpp
-  include/window/mainwindow.hpp       src/mainwindow.cpp
-  src/database.cpp
+  include/window/connectiondialog.hpp   src/connectiondialog.cpp
+  include/window/mainwindow.hpp         src/mainwindow.cpp
+  include/window/queriesdialog.hpp      src/queriesdialog.cpp
+  include/window/selecttabledialog.hpp  src/selecttabledialog.cpp
+  
+  src/query.cpp
 )
 
 
