@@ -1,28 +1,28 @@
-#include "storage/database.hpp"
-#include "dialog/connectiondialog.hpp"
+#include "window/connectiondialog.hpp"
+#include "window/mainwindow.hpp"
 
 #include <QApplication>
-#include <QDebug>
+#include <QSqlDatabase>
 #include <memory>
 
 int main(int argc, char** argv)
 {
   QApplication app(argc, argv);
 
-  std::shared_ptr<carop::Database> db_ptr_;
+  auto db_sptr = std::make_shared<QSqlDatabase>();
 
-  carop::ConnectionDialog cdialog{};
-  cdialog.open();
+  carop::ConnectionDialog cdialog;
+  carop::MainWindow mwindow;
 
-  QObject::connect(&cdialog, &carop::ConnectionDialog::accepted,
-    [&] {
-      qDebug() << "Success connect to database";
-      
-      db_ptr_ = std::make_shared<carop::Database>(cdialog.database());
+  const auto close_dialog_open_main = [&] {
+    cdialog.close();
+    mwindow.show();
+    mwindow.load_data();
+  };
 
-      cdialog.close();
-    }
-  );
+  cdialog.show();
+
+  QObject::connect(&cdialog, &carop::ConnectionDialog::accepted, close_dialog_open_main);
 
   return app.exec();
 }

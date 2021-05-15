@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(CarOperation LANGUAGES CXX)
 
 if (WIN32)
-  set(EXEC_FLAG WIN32)
+  # set(EXEC_FLAG WIN32)
 endif()
 
 set(BIN_NAME carop)
@@ -26,15 +26,20 @@ add_compile_options(-Wall -Werror -Wextra -Wpedantic)
 
 
 set(SRC main.cpp
-  include/dialog/connectiondialog.hpp src/connectiondialog.cpp
-  src/database.cpp
+  include/window/connectiondialog.hpp   src/connectiondialog.cpp
+  include/window/mainwindow.hpp         src/mainwindow.cpp
+  include/window/queriesdialog.hpp      src/queriesdialog.cpp
+  include/window/selecttabledialog.hpp  src/selecttabledialog.cpp
+  
+  src/query.cpp
+  src/entitymanager.cpp
 )
 
 
-find_package(Qt5 COMPONENTS Widgets Sql REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Sql REQUIRED)
 
 include_directories(include)
 
 target_sources(${BIN_NAME} PRIVATE ${SRC})
 
-target_link_libraries(${BIN_NAME} PRIVATE Qt5::Widgets Qt5::Sql)
+target_link_libraries(${BIN_NAME} PRIVATE Qt6::Widgets Qt6::Sql)

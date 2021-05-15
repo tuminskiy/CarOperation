@@ -1,4 +1,4 @@
-#include "dialog/connectiondialog.hpp"
+#include "window/connectiondialog.hpp"
 
 #include <QMessageBox>
 #include <QSqlError>
@@ -9,17 +9,12 @@ namespace carop
 ConnectionDialog::ConnectionDialog(QWidget* parent)
   : QDialog{parent}
   , ui_{}
-  , db_{QSqlDatabase::addDatabase("QPSQL7")}
 {
   ui_.setupUi(this);
 
   connect(ui_.bConnect, &QPushButton::clicked,
           this, &ConnectionDialog::connect_click);
 }
-
-
-QSqlDatabase ConnectionDialog::database() const { return db_; }
-
 
 void ConnectionDialog::connect_click()
 {
@@ -59,14 +54,15 @@ void ConnectionDialog::connect_click()
   const QString password{ ui_.lePassword->text() };
 
   // Try connect
-  db_.setHostName(host);
-  db_.setPort(port);
-  db_.setDatabaseName(db_name);
-  db_.setUserName(username);
-  db_.setPassword(password);
+  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
+  db.setHostName(host);
+  db.setPort(port);
+  db.setDatabaseName(db_name);
+  db.setUserName(username);
+  db.setPassword(password);
 
-  if (!db_.open()) {
-    QMessageBox::critical(this, "Error", "Failed open database.\n" + db_.lastError().text());
+  if (!db.open()) {
+    QMessageBox::critical(this, "Error", "Failed open database.\n" + db.lastError().text());
     return;
   }
 
