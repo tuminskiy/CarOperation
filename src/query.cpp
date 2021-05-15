@@ -10,9 +10,9 @@
 namespace carop
 {
 
-QSqlQuery query_select_table(const QString& table_name, std::shared_ptr<QSqlDatabase> db_sptr)
+QSqlQuery query_select_table(const QString& table_name)
 {
-  QSqlQuery query{ *db_sptr };
+  QSqlQuery query;
   
   const QString str = QString{ "SELECT * FROM %1;" }.arg(table_name);
   query.prepare(str);
@@ -20,9 +20,9 @@ QSqlQuery query_select_table(const QString& table_name, std::shared_ptr<QSqlData
   return query;
 }
 
-QSqlQuery query_insert(const Route& route, std::shared_ptr<QSqlDatabase> db_sptr)
+QSqlQuery query_insert(const Route& route)
 {
-  QSqlQuery query{ *db_sptr };
+  QSqlQuery query;
 
   query.prepare("SELECT insert_route(:station_start, :station_end, :time_start, :time_end);");  
   query.bindValue(":station_start", route.station_start);
@@ -33,9 +33,9 @@ QSqlQuery query_insert(const Route& route, std::shared_ptr<QSqlDatabase> db_sptr
   return query;
 }
 
-QSqlQuery query_insert(const RouteSheet& route_sheet, std::shared_ptr<QSqlDatabase> db_sptr)
+QSqlQuery query_insert(const RouteSheet& route_sheet)
 {
-  QSqlQuery query{ *db_sptr };
+  QSqlQuery query;
 
   query.prepare("SELECT insert_routesheet(:route_id, :bus_id, :status);");
   query.bindValue(":route_id", route_sheet.route_id);
@@ -45,9 +45,9 @@ QSqlQuery query_insert(const RouteSheet& route_sheet, std::shared_ptr<QSqlDataba
   return query;
 }
 
-QSqlQuery query_insert(const Bus& bus, std::shared_ptr<QSqlDatabase> db_sptr)
+QSqlQuery query_insert(const Bus& bus)
 {
-  QSqlQuery query{ *db_sptr };
+  QSqlQuery query;
 
   query.prepare("SELECT insert_bus(:gov_number, :driver_id, :model, :route_number, :capacity);");
   query.bindValue(":gov_number", bus.gov_number);
@@ -59,9 +59,9 @@ QSqlQuery query_insert(const Bus& bus, std::shared_ptr<QSqlDatabase> db_sptr)
   return query;
 }
 
-QSqlQuery query_insert(const Driver& driver, std::shared_ptr<QSqlDatabase> db_sptr)
+QSqlQuery query_insert(const Driver& driver)
 {
-  QSqlQuery query{ *db_sptr };  
+  QSqlQuery query;  
 
   query.prepare("SELECT insert_driver(:name, :passport, :phone, :route_sheet_id);");
   query.bindValue(":name", driver.name);

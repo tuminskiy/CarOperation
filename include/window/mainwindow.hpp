@@ -2,6 +2,7 @@
 
 #include "ui_mainwindow.h"
 #include "queriesdialog.hpp"
+#include "storage/entitymanager.hpp"
 
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
@@ -15,7 +16,9 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
 public:
-  explicit MainWindow(std::shared_ptr<QSqlDatabase> db_sptr, QWidget* parent = nullptr);
+  explicit MainWindow(QWidget* parent = nullptr);
+
+  void load_data();
 
 private slots:
   void submit_click();
@@ -23,8 +26,8 @@ private slots:
 private:
   Ui::MainWindow ui_;
 
-  std::shared_ptr<QSqlDatabase> db_sptr_;
-  carop::QueriesDialog dqueries_;
+  EntityManager entity_manager_;
+  QueriesDialog dqueries_;
   
   QSqlQueryModel view_model_;
 };

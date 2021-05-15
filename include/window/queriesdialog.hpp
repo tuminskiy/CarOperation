@@ -15,7 +15,7 @@ class QueriesDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit QueriesDialog(std::shared_ptr<QSqlDatabase> db_sptr, QWidget* parent = nullptr);
+  explicit QueriesDialog(QWidget* parent = nullptr);
 
 public slots:
   void repeat_query();
@@ -28,7 +28,6 @@ private slots:
 
 private:
   Ui::QueriesDialog ui_;
-  std::shared_ptr<QSqlDatabase> db_sptr_;
   carop::SelectTableDialog dselecttable_;
   QSqlQuery last_query_;
 

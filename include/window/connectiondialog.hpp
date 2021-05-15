@@ -13,14 +13,13 @@ class ConnectionDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit ConnectionDialog(std::shared_ptr<QSqlDatabase> db_sptr, QWidget* parent = nullptr);
+  explicit ConnectionDialog(QWidget* parent = nullptr);
 
 private slots:
   void connect_click();
 
 private:
   Ui::ConnectionDialog ui_;
-  std::shared_ptr<QSqlDatabase> db_sptr_;
 };
 
 } // namespace carop 

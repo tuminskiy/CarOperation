@@ -9,14 +9,15 @@ int main(int argc, char** argv)
 {
   QApplication app(argc, argv);
 
-  auto db_sptr = std::make_shared<QSqlDatabase>(QSqlDatabase::addDatabase("QPSQL"));
+  auto db_sptr = std::make_shared<QSqlDatabase>();
 
-  carop::ConnectionDialog cdialog(db_sptr);
-  carop::MainWindow mwindow(db_sptr);
+  carop::ConnectionDialog cdialog;
+  carop::MainWindow mwindow;
 
   const auto close_dialog_open_main = [&] {
     cdialog.close();
     mwindow.show();
+    mwindow.load_data();
   };
 
   cdialog.show();

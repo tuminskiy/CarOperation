@@ -6,10 +6,9 @@
 namespace carop
 {
 
-ConnectionDialog::ConnectionDialog(std::shared_ptr<QSqlDatabase> db_sptr, QWidget* parent)
+ConnectionDialog::ConnectionDialog(QWidget* parent)
   : QDialog{parent}
   , ui_{}
-  , db_sptr_{db_sptr}
 {
   ui_.setupUi(this);
 
@@ -55,14 +54,15 @@ void ConnectionDialog::connect_click()
   const QString password{ ui_.lePassword->text() };
 
   // Try connect
-  db_sptr_->setHostName(host);
-  db_sptr_->setPort(port);
-  db_sptr_->setDatabaseName(db_name);
-  db_sptr_->setUserName(username);
-  db_sptr_->setPassword(password);
+  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
+  db.setHostName(host);
+  db.setPort(port);
+  db.setDatabaseName(db_name);
+  db.setUserName(username);
+  db.setPassword(password);
 
-  if (!db_sptr_->open()) {
-    QMessageBox::critical(this, "Error", "Failed open database.\n" + db_sptr_->lastError().text());
+  if (!db.open()) {
+    QMessageBox::critical(this, "Error", "Failed open database.\n" + db.lastError().text());
     return;
   }
 

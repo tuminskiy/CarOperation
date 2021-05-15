@@ -7,10 +7,9 @@
 namespace carop
 {
 
-QueriesDialog::QueriesDialog(std::shared_ptr<QSqlDatabase> db_sptr, QWidget* parent)
+QueriesDialog::QueriesDialog(QWidget* parent)
   : QDialog{ parent }
   , ui_{ }
-  , db_sptr_{ db_sptr }
   , dselecttable_{ this }
   , last_query_{ }
 {
@@ -23,11 +22,13 @@ QueriesDialog::QueriesDialog(std::shared_ptr<QSqlDatabase> db_sptr, QWidget* par
           this, &QueriesDialog::select_table_confirm);
 }
 
+
+
 void QueriesDialog::repeat_query() { exec_with_check(last_query_); }
 
 void QueriesDialog::select_table_confirm(const QString& table_name)
 {
-  auto query = query_select_table(table_name, db_sptr_);
+  auto query = query_select_table(table_name);
   exec_with_check(query);
 }
 
