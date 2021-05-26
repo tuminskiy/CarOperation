@@ -20,6 +20,7 @@ QSqlQuery query_select_table(const QString& table_name)
   return query;
 }
 
+
 QSqlQuery query_insert(const Route& route)
 {
   QSqlQuery query;
@@ -70,6 +71,47 @@ QSqlQuery query_insert(const Driver& driver)
   query.bindValue(":route_sheet_id", 
     driver.route_sheet_id ? QVariant{ driver.route_sheet_id.value() } : QVariant{}
   );
+
+  return query;
+}
+
+
+QSqlQuery query_delete_route(id_t route_id)
+{
+  QSqlQuery query;
+
+  query.prepare("SELECT delete_route(:route_id);");
+  query.bindValue(":route_id", route_id);
+
+  return query;
+}
+
+QSqlQuery query_delete_routesheet(id_t routesheet_id)
+{
+  QSqlQuery query;
+
+  query.prepare("SELECT delete_routesheet(:routesheet_id);");
+  query.bindValue(":routesheet_id", routesheet_id);
+
+  return query;
+}
+
+QSqlQuery query_delete_bus(id_t bus_id)
+{
+  QSqlQuery query;
+
+  query.prepare("SELECT delete_bus(:bus_id);");
+  query.bindValue(":bus_id", bus_id);
+
+  return query;
+}
+
+QSqlQuery query_delete_driver(id_t driver_id)
+{
+  QSqlQuery query;
+
+  query.prepare("SELECT delete_driver(:driver_id);");
+  query.bindValue(":driver_id", driver_id);
 
   return query;
 }

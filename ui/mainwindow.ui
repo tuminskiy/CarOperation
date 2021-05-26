@@ -1014,6 +1014,18 @@
         <item>
          <layout class="QHBoxLayout" name="hl_change">
           <item>
+           <widget class="QPushButton" name="bRemove">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="hs_change">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>

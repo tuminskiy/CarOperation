@@ -27,6 +27,11 @@ public:
   bool insert_bus();
   bool insert_driver();
 
+  bool remove_route(id_t route_id);
+  bool remove_routesheet(id_t routesheet_id);
+  bool remove_bus(id_t bus_id);
+  bool remove_driver(id_t driver_id);
+
   QString last_error() const;
 
 private:
