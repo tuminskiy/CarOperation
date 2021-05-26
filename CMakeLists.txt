@@ -30,6 +30,7 @@ set(SRC main.cpp
   include/window/mainwindow.hpp         src/mainwindow.cpp
   include/window/queriesdialog.hpp      src/queriesdialog.cpp
   include/window/selecttabledialog.hpp  src/selecttabledialog.cpp
+  include/window/selectiddialog.hpp     src/selectiddialog.cpp
   
   src/query.cpp
   src/entitymanager.cpp

@@ -281,6 +281,30 @@ bool EntityManager::insert_driver()
   return false;
 }
 
+bool EntityManager::remove_route(id_t route_id)
+{
+  QSqlQuery query = query_delete_route(route_id);
+  return exec_with_check(query);
+}
+
+bool EntityManager::remove_routesheet(id_t routesheet_id)
+{
+  QSqlQuery query = query_delete_routesheet(routesheet_id);
+  return exec_with_check(query);
+}
+
+bool EntityManager::remove_bus(id_t bus_id)
+{
+  QSqlQuery query = query_delete_bus(bus_id);
+  return exec_with_check(query);
+}
+
+bool EntityManager::remove_driver(id_t driver_id)
+{
+  QSqlQuery query = query_delete_driver(driver_id);
+  return exec_with_check(query);
+}
+
 
 QString EntityManager::last_error() const { return last_error_; }
 
