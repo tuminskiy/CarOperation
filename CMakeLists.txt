@@ -24,16 +24,30 @@ set_target_properties(${BIN_NAME} PROPERTIES
 
 add_compile_options(-Wall -Werror -Wextra -Wpedantic)
 
+set(WINDOW_SRC
+  include/window/connectiondialog.hpp   src/window/connectiondialog.cpp
+  include/window/mainwindow.hpp         src/window/mainwindow.cpp
+  include/window/queriesdialog.hpp      src/window/queriesdialog.cpp
+  include/window/selecttabledialog.hpp  src/window/selecttabledialog.cpp
+  include/window/selectiddialog.hpp     src/window/selectiddialog.cpp
+)
+
+set(STORAGE_SRC
+  src/storage/query.cpp
+)
+
+set(TABWORKER_SRC
+  src/tabworker/basetabworker.cpp
+  src/tabworker/routetabworker.cpp
+  src/tabworker/routesheettabworker.cpp
+  src/tabworker/bustabworker.cpp
+  src/tabworker/drivertabworker.cpp
+)
 
 set(SRC main.cpp
-  include/window/connectiondialog.hpp   src/connectiondialog.cpp
-  include/window/mainwindow.hpp         src/mainwindow.cpp
-  include/window/queriesdialog.hpp      src/queriesdialog.cpp
-  include/window/selecttabledialog.hpp  src/selecttabledialog.cpp
-  include/window/selectiddialog.hpp     src/selectiddialog.cpp
-  
-  src/query.cpp
-  src/entitymanager.cpp
+  ${WINDOW_SRC}
+  ${STORAGE_SRC}
+  ${TABWORKER_SRC}
 )
 
 

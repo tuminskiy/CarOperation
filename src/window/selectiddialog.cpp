@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QDialog>
+#include <QSqlQuery>
 #include <QSqlError>
 
 namespace carop
@@ -13,6 +14,7 @@ SelectIdDialog::SelectIdDialog(QWidget* parent)
   , ui_{ }
   , model_{ }
   , selected_id_{ }
+  , last_table_name_{ }
 {
   ui_.setupUi(this);
 
@@ -27,7 +29,12 @@ SelectIdDialog::SelectIdDialog(QWidget* parent)
 
 id_t SelectIdDialog::selected_id() const { return selected_id_; }
 
-void SelectIdDialog::show_table(const QString& table_name)
+void SelectIdDialog::refresh()
+{
+  set_table(last_table_name_);
+}
+
+void SelectIdDialog::set_table(const QString& table_name)
 {
   QSqlQuery query = query_select_table(table_name);
 
@@ -37,6 +44,7 @@ void SelectIdDialog::show_table(const QString& table_name)
   }
 
   model_.setQuery(query);
+  last_table_name_ = table_name;
 }
 
 void SelectIdDialog::confirm_click()

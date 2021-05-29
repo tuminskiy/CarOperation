@@ -24,8 +24,10 @@ public:
 
   id_t selected_id() const;
 
+  void refresh();
+
 public slots:
-  void show_table(const QString& table_name);
+  void set_table(const QString& table_name);
 
 private slots:
   void confirm_click();
@@ -34,6 +36,7 @@ private:
   Ui::SelectIdDialog ui_;
   QSqlQueryModel model_;
   id_t selected_id_;
+  QString last_table_name_;
 };
 
 } // namespace carop

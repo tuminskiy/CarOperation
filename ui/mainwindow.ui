@@ -1026,6 +1026,18 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="bUpdate">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Update</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="hs_change">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -1037,6 +1049,30 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bCancel">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Cancel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bConfirm">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Confirm</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="bSubmit">
