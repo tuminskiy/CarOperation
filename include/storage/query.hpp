@@ -1,18 +1,12 @@
 #pragma once
 
-#include <QSqlQuery>
-#include <memory>
+#include "entity.hpp"
+
+class QSqlQuery;
+class QString;
 
 namespace carop
 {
-
-class Route;
-class RouteSheet;
-class Bus;
-class Driver;
-
-using id_t = unsigned int;
-
 
 QSqlQuery query_select_table(const QString& table_name);
 
@@ -33,5 +27,14 @@ QSqlQuery query_delete_routesheet(id_t routesheet_id);
 QSqlQuery query_delete_bus(id_t bus_id);
 
 QSqlQuery query_delete_driver(id_t driver_id);
+
+
+QSqlQuery query_update(const Route& route);
+
+QSqlQuery query_update(const RouteSheet& route_sheet);
+
+QSqlQuery query_update(const Bus& bus);
+
+QSqlQuery query_update(const Driver& driver);
 
 } // namespace carop
