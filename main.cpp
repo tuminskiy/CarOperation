@@ -3,6 +3,7 @@
 
 #include <QApplication>
 #include <QSqlDatabase>
+#include <QMessageBox>
 #include <memory>
 
 int main(int argc, char** argv)
@@ -20,9 +21,17 @@ int main(int argc, char** argv)
     mwindow.load_data();
   };
 
-  cdialog.show();
+  int result = -1;
 
-  QObject::connect(&cdialog, &carop::ConnectionDialog::accepted, close_dialog_open_main);
+  try {
+    cdialog.show();
 
-  return app.exec();
+    QObject::connect(&cdialog, &carop::ConnectionDialog::accepted, close_dialog_open_main);
+
+    result = app.exec();
+  } catch (const std::exception& e) {
+    QMessageBox::critical(nullptr, "Error", e.what());
+  }
+
+  return result;
 }

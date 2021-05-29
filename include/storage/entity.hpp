@@ -61,3 +61,8 @@ constexpr int phone_max         = 11;
 } // namespace carop::constraints
 
 } // namespace carop
+
+Q_DECLARE_METATYPE(carop::Route)
+Q_DECLARE_METATYPE(carop::RouteSheet)
+Q_DECLARE_METATYPE(carop::Bus)
+Q_DECLARE_METATYPE(carop::Driver)
