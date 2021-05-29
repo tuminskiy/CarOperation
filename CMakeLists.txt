@@ -30,11 +30,10 @@ set(WINDOW_SRC
   include/window/queriesdialog.hpp      src/window/queriesdialog.cpp
   include/window/selecttabledialog.hpp  src/window/selecttabledialog.cpp
   include/window/selectiddialog.hpp     src/window/selectiddialog.cpp
+  include/window/countdialog.hpp        src/window/countdialog.cpp
 )
 
-set(STORAGE_SRC
-  src/storage/query.cpp
-)
+set(STORAGE_SRC src/storage/query.cpp)
 
 set(TABWORKER_SRC
   src/tabworker/basetabworker.cpp

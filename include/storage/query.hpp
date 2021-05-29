@@ -37,4 +37,7 @@ QSqlQuery query_update(const Bus& bus);
 
 QSqlQuery query_update(const Driver& driver);
 
+
+QSqlQuery query_having(int count_more_then);
+
 } // namespace carop

@@ -184,4 +184,19 @@ QSqlQuery query_update(const Driver& driver)
   return query;
 }
 
+QSqlQuery query_having(int count_more_then)
+{
+  QSqlQuery query;
+
+  query.prepare(
+    "SELECT b.model FROM RouteSheet rs "
+    "LEFT JOIN bus b ON b.id = rs.bus_id "
+    "GROUP BY b.model HAVING COUNT(b.model) > :count_more_then;"
+  );
+
+  query.bindValue(":count_more_then", count_more_then);
+
+  return query;
+}
+
 } // namespace carop
