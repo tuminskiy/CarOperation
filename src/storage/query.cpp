@@ -23,7 +23,9 @@ void query_bind(QSqlQuery& query, const Route& route)
 void query_bind(QSqlQuery& query, const RouteSheet& route_sheet)
 {
   query.bindValue(":route_id", route_sheet.route_id);
-  query.bindValue(":bus_id", route_sheet.bus_id);
+  query.bindValue(":bus_id", route_sheet.bus_id.has_value()
+    ? QVariant::fromValue(route_sheet.bus_id.value())
+    : QVariant{ });
   query.bindValue(":status", route_sheet.status);
 }
 

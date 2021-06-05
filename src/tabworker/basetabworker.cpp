@@ -160,7 +160,7 @@ QString BaseTabWorker::as_text(const Route& route) const
 QString BaseTabWorker::as_text(const RouteSheet& routesheet) const
 {
   const Route route = find_in_combobox_by_id<Route>(ui_.cbRoute, routesheet.route_id).value;
-  const Bus bus = find_in_combobox_by_id<Bus>(ui_.cbBus, routesheet.bus_id).value;
+  const Bus bus = find_in_combobox_by_id<Bus>(ui_.cbBus, routesheet.bus_id.value_or(0)).value;
 
   return QString{ "%1 %2 (%3)" }
           .arg(as_text(route))

@@ -22,7 +22,7 @@ struct RouteSheet
 {
   id_t id;
   id_t route_id;
-  id_t bus_id;
+  std::optional<id_t> bus_id;
   QString status;
 };
 

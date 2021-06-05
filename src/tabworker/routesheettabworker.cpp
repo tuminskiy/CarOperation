@@ -21,7 +21,7 @@ void RouteSheetTabWorker::fill_input()
   const RouteSheet routesheet = find_in_combobox_by_id<RouteSheet>(ui_.cbRouteSheet, selected_id_.value()).value;
 
   const int route_index = find_in_combobox_by_id<Route>(ui_.cbRoute, routesheet.route_id).index;
-  const int bus_index = find_in_combobox_by_id<Bus>(ui_.cbBus, routesheet.bus_id).index;
+  const int bus_index = find_in_combobox_by_id<Bus>(ui_.cbBus, routesheet.bus_id.value_or(0)).index;
 
   ui_.cbRoute->setCurrentIndex(route_index);
   ui_.cbBus->setCurrentIndex(bus_index);
@@ -55,11 +55,9 @@ QVariant RouteSheetTabWorker::collect_data() const
   routesheet.route_id = qvariant_cast<Route>(data).id;
 
   // Get bus_id
-  if (data = ui_.cbBus->currentData(); data.isNull()) {
-    throw std::invalid_argument("Bus must be selected");
+  if (data = ui_.cbBus->currentData(); !data.isNull()) {
+    routesheet.bus_id = qvariant_cast<Bus>(data).id;
   }
-
-  routesheet.bus_id = qvariant_cast<Bus>(data).id;
 
   // Get status
   if (routesheet.status = ui_.leStatus->text().trimmed(); routesheet.status.isEmpty()) {
