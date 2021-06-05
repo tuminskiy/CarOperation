@@ -9,7 +9,7 @@ CREATE TABLE Route (
 CREATE TABLE RouteSheet (
 	id SERIAL PRIMARY KEY,
 	route_id INTEGER NOT NULL,
-	bus_id INTEGER NOT NULL,
+	bus_id INTEGER,
 	status VARCHAR(255) NOT NULL
 );
 
@@ -39,3 +39,21 @@ ALTER TABLE Bus
 	
 ALTER TABLE Driver
 	ADD FOREIGN KEY (route_sheet_id) REFERENCES RouteSheet(id);
+
+
+CREATE INDEX ON Driver(name);
+
+
+CREATE OR REPLACE VIEW bus_driver_view AS
+  SELECT b.gov_number, b.model, b.route_number, b.capacity, d.name, d.phone,
+    CASE
+      WHEN d.route_sheet_id IS NULL THEN ''
+      WHEN d.route_sheet_id IS NOT NULL THEN (
+        SELECT status FROM routesheet rs
+        WHERE rs.id = d.route_sheet_id
+      )
+    END status
+  FROM bus b, LATERAL (
+    SELECT * FROM driver WHERE b.driver_id = driver.id
+  ) d;
+
