@@ -46,4 +46,5 @@ QSqlQuery query_having(int count_more_then);
 QSqlQuery query_view(const QString& order_by);
 
 
+QSqlQuery query_any(const QString& station_start);
 } // namespace carop

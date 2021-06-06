@@ -4,6 +4,7 @@
 #include "selecttabledialog.hpp"
 #include "countdialog.hpp"
 #include "orderdialog.hpp"
+#include "startstationdialog.hpp"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -29,12 +30,14 @@ private slots:
   void select_table_confirm(const QString& table_name);
   void count_confirm(int count);
   void order_confirm(const QString& order_by);
+  void station_confirm(const QString& start_station);
 
 private:
   Ui::QueriesDialog ui_;
   SelectTableDialog dselecttable_;
   CountDialog dcount_;
   OrderDialog dorder_;
+  StartStationDialog dstation_;
 
   QSqlQuery last_query_;
 

@@ -244,4 +244,20 @@ QSqlQuery query_view(const QString& order_by)
   return query;
 }
 
+
+QSqlQuery query_any(const QString& station_start)
+{
+  QSqlQuery query;
+
+  query.prepare(
+    "SELECT route.station_start, count_driver_on_start_station(:station_start) driver_count "
+    "FROM routesheet, route "
+    "WHERE route_id = ANY ( SELECT id FROM route_by_station_start(:station_start) );"
+  );
+
+  query.bindValue(":station_start", station_start);
+
+  return query;
+}
+
 } // namespace carop

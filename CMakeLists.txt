@@ -32,6 +32,7 @@ set(WINDOW_SRC
   include/window/selectiddialog.hpp     src/window/selectiddialog.cpp
   include/window/countdialog.hpp        src/window/countdialog.cpp
   include/window/orderdialog.hpp        src/window/orderdialog.cpp
+  include/window/startstationdialog.hpp src/window/startstationdialog.cpp
 )
 
 set(STORAGE_SRC src/storage/query.cpp)
