@@ -175,7 +175,6 @@ void MainWindow::confirm_click()
   } catch (const std::runtime_error& e) {
     QMessageBox::critical(this, "Error", e.what());
   }
-
 }
 
 void MainWindow::cancel_click()
