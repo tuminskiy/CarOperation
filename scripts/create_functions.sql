@@ -1,4 +1,4 @@
-/* INSERT PROCEDURES */
+/* INSERT FUNCTIONS */
 
 CREATE OR REPLACE FUNCTION insert_route(
   _station_start VARCHAR(255),
@@ -57,7 +57,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-/* UPDATE PROCEDURES */
+/* UPDATE FUNCTIONS */
 
 CREATE OR REPLACE FUNCTION update_route(
   _id INTEGER,
@@ -89,7 +89,7 @@ AS $$
 BEGIN
   UPDATE RouteSheet SET
     route_id = COALESCE(_route_id, RouteSheet.route_id),
-    bus_id   = COALESCE(_bus_id, RouteSheet.bus_id),
+    bus_id   = _bus_id,
     status   = COALESCE(_status, RouteSheet.status)
   WHERE id = _id;
 END;
@@ -130,13 +130,13 @@ BEGIN
     name            = COALESCE(_name, Driver.name),
     passport        = COALESCE(_passport, Driver.passport),
     phone           = COALESCE(_phone, Driver.phone),
-    route_sheet_id  = COALESCE(_route_sheet_id, Driver.route_sheet_id)
+    route_sheet_id  = _route_sheet_id
   WHERE id = _id;
 END;
 $$ LANGUAGE plpgsql;
 
 
-/* DELETE PROCEDURE */
+/* DELETE FUNCTIONS */
 
 CREATE OR REPLACE FUNCTION delete_route(_id INTEGER)
 RETURNS void
@@ -167,5 +167,34 @@ RETURNS void
 AS $$
 BEGIN
   DELETE FROM Driver WHERE id = _id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION route_by_station_start(_station_start VARCHAR(255))
+RETURNS TABLE(
+  id INTEGER,
+  station_start VARCHAR(255),
+  station_end VARCHAR(255),
+  time_start TIMESTAMP,
+  time_end TIMESTAMP
+) AS $$
+BEGIN
+  RETURN QUERY SELECT * FROM route WHERE station_start LIKE _station_start;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION count_driver_on_start_station(_station_start VARCHAR(255))
+RETURNS INTEGER
+AS $$
+DECLARE
+  driver_count INTEGER;
+BEGIN
+  SELECT count(*) INTO driver_count FROM driver d, route r
+  WHERE r.id = (
+    SELECT route_id FROM routesheet rs
+    WHERE rs.id = d.route_sheet_id
+  ) AND r.station_start LIKE _station_start;
+
+  RETURN driver_count;
 END;
 $$ LANGUAGE plpgsql;

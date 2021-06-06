@@ -4,6 +4,7 @@
 #include "tabworker/routesheettabworker.hpp"
 #include "tabworker/bustabworker.hpp"
 #include "tabworker/drivertabworker.hpp"
+#include "tabworker/viewworker.hpp"
 
 #include <QSqlQuery>
 #include <QMessageBox>
@@ -30,7 +31,13 @@ MainWindow::MainWindow(QWidget* parent)
   ui_.leRouteNumber->setMaxLength(constraints::route_number_max);
   ui_.leName->setMaxLength(constraints::name_max);
   ui_.lePassport->setMaxLength(constraints::passport_max);
-  ui_.lePhone->setMaxLength(constraints::phone_max);
+  ui_.lePhone->setMaxLength(constraints::phone_max);  
+  ui_.leBdvGovNumber->setMaxLength(constraints::gov_number_max);
+  ui_.leBdvModel->setMaxLength(constraints::model_max);
+  ui_.leBdvRouteNumber->setMaxLength(constraints::route_number_max);
+  ui_.leBdvName->setMaxLength(constraints::name_max);
+  ui_.leBdvPhone->setMaxLength(constraints::phone_max);
+  ui_.leBdvStatus->setMaxLength(constraints::status_max);
 
   ui_.tvView->setModel(&view_model_);
 
@@ -95,6 +102,9 @@ void MainWindow::tab_table_change(int /*index*/)
   } else if (current_tab == ui_.tabDriver) {
     tabworker_ = std::make_unique<DriverTabWorker>(ui_);
     dselectid_.set_table("driver");
+  } else if (current_tab == ui_.tabBusDriverView) {
+    tabworker_ = std::make_unique<ViewWorker>(ui_);
+    dselectid_.set_table("bus_driver_view");
   } else {
     throw std::runtime_error("TabWorker not found");
   }
@@ -110,6 +120,8 @@ void MainWindow::submit_click()
     QMessageBox::information(this, "Inforamtion", "Insert completed successfully");
 
   } catch (const std::invalid_argument& e) {
+    QMessageBox::critical(this, "Error", e.what());
+  } catch (const std::runtime_error& e) {
     QMessageBox::critical(this, "Error", e.what());
   }
 }
@@ -129,6 +141,8 @@ void MainWindow::remove_click()
     QMessageBox::information(this, "Inforamtion", "Remove completed successfully");
 
   } catch (const std::invalid_argument& e) {
+    QMessageBox::critical(this, "Error", e.what());
+  } catch (const std::runtime_error& e) {
     QMessageBox::critical(this, "Error", e.what());
   }
 } 
@@ -157,6 +171,8 @@ void MainWindow::confirm_click()
     QMessageBox::information(this, "Information", "Update complated successfuly");
 
   } catch (const std::invalid_argument& e) {
+    QMessageBox::critical(this, "Error", e.what());
+  } catch (const std::runtime_error& e) {
     QMessageBox::critical(this, "Error", e.what());
   }
 

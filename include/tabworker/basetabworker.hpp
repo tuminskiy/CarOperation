@@ -40,25 +40,31 @@ protected:
   virtual QSqlQuery prepare_remove(id_t id) const = 0;
   virtual QSqlQuery prepare_update(const QVariant& value) const = 0;
 
-  virtual void after_success_insert(id_t id, const QVariant& value) = 0;
-  virtual void after_success_remove(id_t id) = 0;
-  virtual void after_success_update(const QVariant& value) = 0;
-
   template <class T>
   struct IndexValue { int index; T value; };
 
-  template <class T>
-  IndexValue<T> find_in_combobox_by_id(QComboBox* cb, id_t id) const
+  template <class T, class Pred>
+  IndexValue<T> find_in_combobox(QComboBox* cb, Pred pred) const
   {
     for (int i = 0; i < cb->count(); i++) {
       const T value = qvariant_cast<T>(cb->itemData(i));
 
-      if (value.id == id) {
+      if (pred(value)) {
         return {i, value};
       }
     }
 
-    return {};
+    return {-1, {}};
+  }
+
+  template <class T>
+  IndexValue<T> find_in_combobox_by_id(QComboBox* cb, id_t id) const
+  {
+    const auto pred = [id](const T& value) {
+      return value.id == id;
+    };
+
+    return find_in_combobox<T>(cb, pred);
   }
 
 protected:

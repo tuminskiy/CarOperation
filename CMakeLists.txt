@@ -30,11 +30,12 @@ set(WINDOW_SRC
   include/window/queriesdialog.hpp      src/window/queriesdialog.cpp
   include/window/selecttabledialog.hpp  src/window/selecttabledialog.cpp
   include/window/selectiddialog.hpp     src/window/selectiddialog.cpp
+  include/window/countdialog.hpp        src/window/countdialog.cpp
+  include/window/orderdialog.hpp        src/window/orderdialog.cpp
+  include/window/startstationdialog.hpp src/window/startstationdialog.cpp
 )
 
-set(STORAGE_SRC
-  src/storage/query.cpp
-)
+set(STORAGE_SRC src/storage/query.cpp)
 
 set(TABWORKER_SRC
   src/tabworker/basetabworker.cpp
@@ -42,6 +43,7 @@ set(TABWORKER_SRC
   src/tabworker/routesheettabworker.cpp
   src/tabworker/bustabworker.cpp
   src/tabworker/drivertabworker.cpp
+  src/tabworker/viewworker.cpp
 )
 
 set(SRC main.cpp

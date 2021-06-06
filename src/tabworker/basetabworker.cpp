@@ -9,6 +9,11 @@ namespace carop
 
 void BaseTabWorker::load_data()
 {
+  ui_.cbRoute->clear();
+  ui_.cbRouteSheet->clear();
+  ui_.cbDriver->clear();
+  ui_.cbBus->clear();
+
   ui_.cbRoute->addItem("", QVariant{ });
   ui_.cbRouteSheet->addItem("", QVariant{ });
   ui_.cbDriver->addItem("", QVariant{ });
@@ -108,7 +113,9 @@ void BaseTabWorker::insert()
 
   const id_t id = query.lastInsertId().toUInt();
 
-  after_success_insert(id, value);
+  clear_input();
+
+  load_data();
 }
 
 void BaseTabWorker::remove()
@@ -123,9 +130,9 @@ void BaseTabWorker::remove()
     throw std::invalid_argument(query.lastError().text().toStdString());
   }
 
-  after_success_remove(selected_id_.value());
-
   selected_id_ = std::nullopt;
+
+  load_data();
 }
 
 void BaseTabWorker::update()
@@ -142,9 +149,9 @@ void BaseTabWorker::update()
     throw std::invalid_argument(query.lastError().text().toStdString());
   }
 
-  after_success_update(value);
-
   clear_input();
+
+  load_data();
 }
 
 
@@ -160,7 +167,10 @@ QString BaseTabWorker::as_text(const Route& route) const
 QString BaseTabWorker::as_text(const RouteSheet& routesheet) const
 {
   const Route route = find_in_combobox_by_id<Route>(ui_.cbRoute, routesheet.route_id).value;
-  const Bus bus = find_in_combobox_by_id<Bus>(ui_.cbBus, routesheet.bus_id).value;
+  
+  const Bus bus = routesheet.bus_id.has_value()
+    ? find_in_combobox_by_id<Bus>(ui_.cbBus, routesheet.bus_id.value()).value
+    : Bus{ };
 
   return QString{ "%1 %2 (%3)" }
           .arg(as_text(route))
