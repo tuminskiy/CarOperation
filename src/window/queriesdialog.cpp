@@ -12,6 +12,7 @@ QueriesDialog::QueriesDialog(QWidget* parent)
   , ui_{ }
   , dselecttable_{ this }
   , dcount_{ this }
+  , dorder_{ this }
   , last_query_{ }
 {
   ui_.setupUi(this);
@@ -22,12 +23,18 @@ QueriesDialog::QueriesDialog(QWidget* parent)
   connect(ui_.bHaving, &QPushButton::clicked,
           &dcount_, &CountDialog::open);
 
+  connect(ui_.bView, &QPushButton::clicked,
+          &dorder_, &OrderDialog::open);
+
 
   connect(&dselecttable_, &SelectTableDialog::confirmed,
           this, &QueriesDialog::select_table_confirm);
 
   connect(&dcount_, &CountDialog::confirmed,
           this, &QueriesDialog::count_confirm);
+
+  connect(&dorder_, &OrderDialog::confirmed,
+          this, &QueriesDialog::order_confirm);
 }
 
 
@@ -46,6 +53,13 @@ void QueriesDialog::count_confirm(int count)
   QSqlQuery query = query_having(count);
   exec_with_check(query);
 }
+
+void QueriesDialog::order_confirm(const QString& order_by)
+{
+  QSqlQuery query= query_view(order_by);
+  exec_with_check(query);
+}
+
 
 void QueriesDialog::exec_with_check(QSqlQuery& query)
 {

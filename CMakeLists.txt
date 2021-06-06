@@ -31,6 +31,7 @@ set(WINDOW_SRC
   include/window/selecttabledialog.hpp  src/window/selecttabledialog.cpp
   include/window/selectiddialog.hpp     src/window/selectiddialog.cpp
   include/window/countdialog.hpp        src/window/countdialog.cpp
+  include/window/orderdialog.hpp        src/window/orderdialog.cpp
 )
 
 set(STORAGE_SRC src/storage/query.cpp)

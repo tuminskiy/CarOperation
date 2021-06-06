@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>316</width>
+    <height>98</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,6 +38,18 @@
      </property>
      <property name="text">
       <string>Having</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="bView">
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>View</string>
      </property>
     </widget>
    </item>

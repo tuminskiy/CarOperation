@@ -201,4 +201,18 @@ QSqlQuery query_having(int count_more_then)
   return query;
 }
 
+
+QSqlQuery query_view(const QString& order_by)
+{
+  QSqlQuery query;
+
+  const QString str = QString{
+    "SELECT * FROM bus_driver_view ORDER BY %1;"
+  }.arg(order_by);
+
+  query.prepare(str);
+
+  return query;
+}
+
 } // namespace carop

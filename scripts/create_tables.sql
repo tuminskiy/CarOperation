@@ -45,7 +45,7 @@ CREATE INDEX ON Driver(name);
 
 
 CREATE OR REPLACE VIEW bus_driver_view AS
-  SELECT b.gov_number, b.model, b.route_number, b.capacity, d.name, d.phone,
+  SELECT b.id, b.gov_number, b.model, b.route_number, b.capacity, d.name, d.phone,
     CASE
       WHEN d.route_sheet_id IS NULL THEN ''
       WHEN d.route_sheet_id IS NOT NULL THEN (

@@ -40,4 +40,7 @@ QSqlQuery query_update(const Driver& driver);
 
 QSqlQuery query_having(int count_more_then);
 
+
+QSqlQuery query_view(const QString& order_by);
+
 } // namespace carop
