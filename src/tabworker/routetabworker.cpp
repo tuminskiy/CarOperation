@@ -81,31 +81,4 @@ QSqlQuery RouteTabWorker::prepare_update(const QVariant& value) const
   return query_update(route);
 }
 
-
-void RouteTabWorker::after_success_insert(id_t id, const QVariant& value)
-{
-  Route route = qvariant_cast<Route>(value);
-  route.id = id;
-
-  ui_.cbRoute->addItem(as_text(route), QVariant::fromValue(route));
-}
-
-void RouteTabWorker::after_success_remove(id_t id)
-{
-  const int index = find_in_combobox_by_id<Route>(ui_.cbRoute, id).index;
-  
-  ui_.cbRoute->removeItem(index);
-}
-
-void RouteTabWorker::after_success_update(const QVariant& value)
-{
-  const Route route = qvariant_cast<Route>(value);
-
-  const int index = find_in_combobox_by_id<Route>(ui_.cbRoute, route.id).index;
-
-  ui_.cbRoute->setItemData(index, value);
-  ui_.cbRoute->setItemText(index, as_text(route));
-}
-
-
 } // namespace carop

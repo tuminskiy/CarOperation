@@ -104,30 +104,4 @@ QSqlQuery BusTabWorker::prepare_update(const QVariant& value) const
 }
 
 
-void BusTabWorker::after_success_insert(id_t id, const QVariant& value)
-{
-  Bus bus = qvariant_cast<Bus>(value);
-  bus.id = id;
-
-  ui_.cbBus->addItem(as_text(bus), QVariant::fromValue(bus));
-}
-
-void BusTabWorker::after_success_remove(id_t id)
-{
-  const int index = find_in_combobox_by_id<Bus>(ui_.cbBus, id).index;
-  
-  ui_.cbBus->removeItem(index);
-}
-
-void BusTabWorker::after_success_update(const QVariant& value)
-{
-  const Bus bus = qvariant_cast<Bus>(value);
-
-  const int index = find_in_combobox_by_id<Bus>(ui_.cbBus, bus.id).index;
-
-  ui_.cbBus->setItemData(index, value);
-  ui_.cbBus->setItemText(index, as_text(bus));
-}
-
-
 } // namespace carop

@@ -92,31 +92,4 @@ QSqlQuery DriverTabWorker::prepare_update(const QVariant& value) const
   return carop::query_update(driver);
 }
 
-
-void DriverTabWorker::after_success_insert(id_t id, const QVariant& value)
-{
-  Driver driver = qvariant_cast<Driver>(value);
-  driver.id = id;
-
-  ui_.cbDriver->addItem(as_text(driver), QVariant::fromValue(driver));
-}
-
-void DriverTabWorker::after_success_remove(id_t id)
-{
-  const int index = find_in_combobox_by_id<Driver>(ui_.cbDriver, id).index;
-  
-  ui_.cbDriver->removeItem(index);
-}
-
-void DriverTabWorker::after_success_update(const QVariant& value)
-{
-  const Driver driver = qvariant_cast<Driver>(value);
-
-  const int index = find_in_combobox_by_id<Driver>(ui_.cbDriver, driver.id).index;
-
-  ui_.cbDriver->setItemData(index, value);
-  ui_.cbDriver->setItemText(index, as_text(driver));
-}
-
-
 } // namespace carop

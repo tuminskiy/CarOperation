@@ -25,6 +25,7 @@ void RouteSheetTabWorker::fill_input()
 
   ui_.cbRoute->setCurrentIndex(route_index);
   ui_.cbBus->setCurrentIndex(bus_index);
+  ui_.leStatus->setText(routesheet.status);
 }
 
 void RouteSheetTabWorker::clear_input()
@@ -60,9 +61,7 @@ QVariant RouteSheetTabWorker::collect_data() const
   }
 
   // Get status
-  if (routesheet.status = ui_.leStatus->text().trimmed(); routesheet.status.isEmpty()) {
-    throw std::invalid_argument("The status field must be filled");
-  }
+  routesheet.status = ui_.leStatus->text().trimmed();
 
   return QVariant::fromValue(routesheet);
 }
@@ -85,32 +84,6 @@ QSqlQuery RouteSheetTabWorker::prepare_update(const QVariant& value) const
   const RouteSheet routesheet = qvariant_cast<RouteSheet>(value);
   
   return carop::query_update(routesheet);
-}
-
-
-void RouteSheetTabWorker::after_success_insert(id_t id, const QVariant& value)
-{
-  RouteSheet routesheet = qvariant_cast<RouteSheet>(value);
-  routesheet.id = id;
-
-  ui_.cbRouteSheet->addItem(as_text(routesheet), QVariant::fromValue(routesheet));
-}
-
-void RouteSheetTabWorker::after_success_remove(id_t id)
-{
-  const int index = find_in_combobox_by_id<RouteSheet>(ui_.cbRouteSheet, id).index;
-  
-  ui_.cbRouteSheet->removeItem(index);
-}
-
-void RouteSheetTabWorker::after_success_update(const QVariant& value)
-{
-  const RouteSheet routesheet = qvariant_cast<RouteSheet>(value);
-
-  const int index = find_in_combobox_by_id<RouteSheet>(ui_.cbRouteSheet, routesheet.id).index;
-
-  ui_.cbRouteSheet->setItemData(index, value);
-  ui_.cbRouteSheet->setItemText(index, as_text(routesheet));
 }
 
 
