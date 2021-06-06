@@ -170,7 +170,7 @@ EXECUTE PROCEDURE handle_update_bus();
 CREATE OR REPLACE FUNCTION handle_insert_routesheet() RETURNS trigger AS $$
 BEGIN
   IF NEW.bus_id IS NULL THEN
-    RETURN NEW;
+    ROLLBACK
   END IF;
   
   UPDATE driver SET route_sheet_id = NEW.id
@@ -179,6 +179,7 @@ BEGIN
     WHERE bus.id = NEW.bus_id
   );
 
+  COMMIT
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
