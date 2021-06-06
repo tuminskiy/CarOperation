@@ -113,6 +113,8 @@ void BaseTabWorker::insert()
 
   const id_t id = query.lastInsertId().toUInt();
 
+  clear_input();
+
   load_data();
 }
 

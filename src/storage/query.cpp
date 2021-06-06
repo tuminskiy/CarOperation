@@ -186,6 +186,35 @@ QSqlQuery query_update(const Driver& driver)
   return query;
 }
 
+QSqlQuery query_update(const BusDriverView& bdw)
+{
+  QSqlQuery query;
+
+  query.prepare(
+    "UPDATE bus_driver_view SET "
+    "  gov_number = :gov_number, "
+    "  model = :model, "
+    "  route_number = :route_number, "
+    "  capacity = :capacity, "
+    "  name = :name, "
+    "  phone = :phone, "
+    "  status = :status "
+    "WHERE id = :id;"
+  );
+
+  query.bindValue(":gov_number", bdw.gov_number);
+  query.bindValue(":model", bdw.model);
+  query.bindValue(":route_number", bdw.route_number);
+  query.bindValue(":capacity", bdw.capacity);
+  query.bindValue(":name", bdw.name);
+  query.bindValue(":phone", bdw.phone);
+  query.bindValue(":status", bdw.status);
+  query.bindValue(":id", bdw.id);
+
+  return query;
+}
+
+
 QSqlQuery query_having(int count_more_then)
 {
   QSqlQuery query;

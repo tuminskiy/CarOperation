@@ -45,6 +45,18 @@ struct Driver
   std::optional<id_t> route_sheet_id;
 };
 
+struct BusDriverView
+{
+  id_t id;
+  QString gov_number;
+  QString model;
+  QString route_number;
+  unsigned int capacity;
+  QString name;
+  QString phone;
+  QString status;
+};
+
 namespace constraints
 {
 
@@ -66,3 +78,4 @@ Q_DECLARE_METATYPE(carop::Route)
 Q_DECLARE_METATYPE(carop::RouteSheet)
 Q_DECLARE_METATYPE(carop::Bus)
 Q_DECLARE_METATYPE(carop::Driver)
+Q_DECLARE_METATYPE(carop::BusDriverView)

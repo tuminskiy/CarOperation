@@ -61,7 +61,7 @@ QVariant DriverTabWorker::collect_data() const
 
   // Get phone
   if (driver.phone = ui_.lePhone->text().trimmed(); driver.phone.isEmpty()) {
-    throw std::invalid_argument("The driver field must be filled");
+    throw std::invalid_argument("The phone field must be filled");
   }
 
   // Get route_sheet_id

@@ -91,7 +91,7 @@ DECLARE
     FOR UPDATE;
   driver_record record;
 BEGIN
-  IF OLD.bus_id = NEW.bus_id THEN
+  IF (OLD.bus_id = NEW.bus_id) OR (NEW.bus_id IS NULL) THEN
     RETURN NEW;
   END IF;
 
@@ -186,3 +186,42 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER on_insert_routesheet
 AFTER INSERT ON routesheet FOR EACH ROW
 EXECUTE PROCEDURE handle_insert_routesheet();
+
+
+
+CREATE OR REPLACE FUNCTION handle_update_bus_driver_view() RETURNS trigger AS $$
+DECLARE
+  d_id INTEGER;
+  rs_id INTEGER;
+BEGIN
+  UPDATE bus SET
+    gov_number = COALESCE(NEW.gov_number, OLD.gov_number),
+    model = COALESCE(NEW.model, OLD.model),
+    route_number = COALESCE(NEW.route_number, OLD.route_number),
+    capacity = COALESCE(NEW.capacity, OLD.capacity)
+  WHERE id = NEW.id;
+
+  SELECT driver_id INTO d_id FROM bus
+  WHERE id = NEW.id;
+
+  UPDATE driver SET
+    name = COALESCE(NEW.name, OLD.name),
+    phone = COALESCE(NEW.phone, OLD.phone)
+  WHERE id = d_id;
+
+  SELECT route_sheet_id INTO rs_id FROM driver
+  WHERE id = d_id;
+
+  IF rs_id IS NOT NULL THEN
+    UPDATE routesheet SET
+      status = COALESCE(NEW.status, OLD.status)
+    WHERE id = rs_id;
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER on_update_bus_driver_view
+INSTEAD OF UPDATE ON bus_driver_view FOR EACH ROW
+EXECUTE PROCEDURE handle_update_bus_driver_view();

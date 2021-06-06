@@ -42,6 +42,7 @@ set(TABWORKER_SRC
   src/tabworker/routesheettabworker.cpp
   src/tabworker/bustabworker.cpp
   src/tabworker/drivertabworker.cpp
+  src/tabworker/viewworker.cpp
 )
 
 set(SRC main.cpp
