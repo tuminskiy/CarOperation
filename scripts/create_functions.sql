@@ -169,3 +169,32 @@ BEGIN
   DELETE FROM Driver WHERE id = _id;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION route_by_station_start(_station_start VARCHAR(255))
+RETURNS TABLE(
+  id INTEGER,
+  station_start VARCHAR(255),
+  station_end VARCHAR(255),
+  time_start TIMESTAMP,
+  time_end TIMESTAMP
+) AS $$
+BEGIN
+  RETURN QUERY SELECT * FROM route WHERE station_start LIKE _station_start;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION count_driver_on_start_station(_station_start VARCHAR(255))
+RETURNS INTEGER
+AS $$
+DECLARE
+  driver_count INTEGER;
+BEGIN
+  SELECT count(*) INTO driver_count FROM driver d, route r
+  WHERE r.id = (
+    SELECT route_id FROM routesheet rs
+    WHERE rs.id = d.route_sheet_id
+  ) AND r.station_start LIKE _station_start;
+
+  RETURN driver_count;
+END;
+$$ LANGUAGE plpgsql;
